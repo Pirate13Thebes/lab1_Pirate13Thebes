@@ -1,30 +1,19 @@
 #!/bin/bash
-# ─────────────────────────────────────────────────────────────
-# feed-analyzer.sh
-# Analyzes twitter_dataset.csv to display the Top 5 Most Active Users.
+# Analysing twitter_dataset.csv to display the Top 5 Most Active Users.
 # Usage: bash feed-analyzer.sh twitter_dataset.csv
-# ─────────────────────────────────────────────────────────────
 
 FILE=${1:-twitter_dataset.csv}
 
-# Check the file exists before proceeding
+# Checking if the file exists before proceeding
 if [ ! -f "$FILE" ]; then
     echo "Error: File '$FILE' not found."
     echo "Usage: bash feed-analyzer.sh twitter_dataset.csv"
     exit 1
 fi
 
-echo "======================================="
-echo " Top 5 Most Active Users in: $FILE"
-echo "======================================="
+echo "Top 5 Most Active Users in: $FILE"
 
-# Pipeline explanation:
-# tail -n +2        → skip the header row
-# cut -d',' -f2     → extract the 2nd column (Username)
-# sort              → sort usernames alphabetically (required by uniq)
-# uniq -c           → count consecutive identical usernames
-# sort -rn          → sort numerically in reverse (highest count first)
-# head -5           → keep only the top 5
+# Skipping the header row with tail, extracting the Username column with cut,
+# sorting alphabetically for uniq, counting occurrences with uniq -c,
+# sorting by highest count, and keeping only the top 5 with head
 tail -n +2 "$FILE" | cut -d',' -f2 | sort | uniq -c | sort -rn | head -5
-
-echo "======================================="
